@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Waheed Tunde Kehinde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #06090f;
+      --bg2: #0d1420;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f4f8;
+      --muted: #7d8fa3;
+      --accent: #38bdf8;
+      --accent2: #a78bfa;
+      --accent3: #34d399;
+      --accent4: #fb923c;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 100% 50% at 50% 0%, black 20%, transparent 100%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%;
+      pointer-events: none; z-index: 0;
+      filter: blur(120px); opacity: 0.08;
+    }
+    .orb-1 { width: 600px; height: 600px; background: #a78bfa; top: -200px; left: -150px; }
+    .orb-2 { width: 500px; height: 500px; background: #38bdf8; bottom: 0; right: -100px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2rem; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(6,9,15,0.75); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.875rem; padding: 0.4rem 0.9rem; border-radius: 8px; transition: all 0.2s; }
+    .nav-links a:hover { color: var(--text); background: var(--surface); }
+    .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent) !important; color: #06090f !important; font-weight: 600 !important; border-radius: 8px; }
+
+    /* ── HERO INTRO ── */
+    .intro {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 2rem 4rem;
+      position: relative; z-index: 2;
+    }
+
+    .intro-left { position: relative; }
+
+    .avatar-wrap {
+      position: relative;
+      width: 480px;
+      height: 480px;
+    }
+
+    .avatar-ring {
+      position: absolute; inset: -12px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent), var(--accent2), var(--accent3), var(--accent), var(--accent2));
+      animation: spin 8s linear infinite;
+      opacity: 0.5;
+    }
+    .avatar-ring-mask {
+      position: absolute; inset: -12px;
+      border-radius: 50%;
+      background: conic-gradient(transparent 60%, var(--bg) 100%);
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .avatar-img {
+      position: relative; z-index: 1;
+      width: 340px; height: 340px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--bg2);
+      background: linear-gradient(135deg, #0d1f35, #1a1040);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .avatar-img, img.avatar-placeholder {
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+      border: 3px solid #0d1420;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: 10px; right: -10px;
+      background: var(--bg2);
+      border: 1px solid rgba(52,211,153,0.3);
+      border-radius: 12px;
+      padding: 0.6rem 1rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      z-index: 2;
+    }
+    .avatar-badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent3);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+    .avatar-badge span { font-size: 0.8rem; font-weight: 500; color: var(--accent3); }
+
+    .flag-badge {
+      position: absolute;
+      top: 10px; left: -10px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.5rem 0.9rem;
+      font-size: 0.8rem; font-weight: 500;
+      color: var(--text); z-index: 2;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+
+    .intro-right { }
+
+    .page-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent2); margin-bottom: 0.75rem;
+    }
+
+    .intro-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 3.8rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.04em; margin-bottom: 0.5rem;
+    }
+
+    .intro-role {
+      font-size: 1.1rem; color: var(--accent);
+      font-weight: 500; margin-bottom: 1.75rem;
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    }
+    .intro-role .sep { color: var(--border); }
+
+    .intro-story {
+      color: var(--muted); font-size: 1rem;
+      line-height: 1.85; font-weight: 300;
+      margin-bottom: 2rem;
+    }
+    .intro-story strong { color: var(--text); font-weight: 500; }
+    .intro-story em { color: var(--accent2); font-style: normal; font-weight: 500; }
+
+    .pull-quote {
+      border-left: 2px solid var(--accent2);
+      padding: 0.75rem 1.25rem;
+      margin: 1.75rem 0;
+      background: rgba(167,139,250,0.05);
+      border-radius: 0 10px 10px 0;
+    }
+    .pull-quote p {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      color: var(--text); line-height: 1.5;
+      font-style: italic;
+    }
+
+    .intro-actions {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent); color: #06090f;
+      padding: 0.75rem 1.6rem; border-radius: 10px;
+      font-weight: 600; text-decoration: none; font-size: 0.9rem;
+      transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(56,189,248,0.25); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      padding: 0.75rem 1.6rem; border-radius: 10px;
+      font-weight: 500; text-decoration: none; font-size: 0.9rem;
+      border: 1px solid var(--border); transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.2); background: var(--surface); }
+
+    /* ── JOURNEY SECTION ── */
+    .journey {
+      max-width: 1200px; margin: 0 auto;
+      padding: 2rem 2rem 6rem;
+      position: relative; z-index: 2;
+    }
+
+    .section-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 800; letter-spacing: -0.03em; line-height: 1.1;
+      margin-bottom: 3rem;
+    }
+    .section-title span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 8px;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), var(--accent3));
+      opacity: 0.3;
+    }
+
+    .tl-item {
+      position: relative;
+      padding: 0 0 2.5rem 2rem;
+    }
+    .tl-item:last-child { padding-bottom: 0; }
+
+    .tl-dot {
+      position: absolute;
+      left: -5px; top: 6px;
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+    }
+    .tl-dot.blue { background: var(--accent); box-shadow: 0 0 8px rgba(56,189,248,0.5); }
+    .tl-dot.purple { background: var(--accent2); box-shadow: 0 0 8px rgba(167,139,250,0.5); }
+    .tl-dot.green { background: var(--accent3); box-shadow: 0 0 8px rgba(52,211,153,0.5); }
+    .tl-dot.orange { background: var(--accent4); box-shadow: 0 0 8px rgba(251,146,60,0.5); }
+
+    .tl-year {
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 0.4rem;
+    }
+    .tl-year.blue { color: var(--accent); }
+    .tl-year.purple { color: var(--accent2); }
+    .tl-year.green { color: var(--accent3); }
+    .tl-year.orange { color: var(--accent4); }
+
+    .tl-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 0.4rem; color: var(--text);
+    }
+    .tl-desc {
+      font-size: 0.875rem; color: var(--muted);
+      line-height: 1.7; max-width: 520px;
+    }
+    .tl-desc strong { color: var(--text); font-weight: 500; }
+
+    /* ── VALUES / APPROACH ── */
+    .values {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 6rem;
+      position: relative; z-index: 2;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .value-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: border-color 0.2s;
+    }
+    .value-card:hover { border-color: rgba(56,189,248,0.25); }
+
+    .value-icon {
+      font-size: 1.8rem; margin-bottom: 1rem;
+    }
+    .value-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.95rem; font-weight: 700;
+      margin-bottom: 0.5rem; color: var(--text);
+    }
+    .value-desc {
+      font-size: 0.85rem; color: var(--muted); line-height: 1.7;
+    }
+
+    /* ── CURRENTLY SECTION ── */
+    .currently {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 6rem;
+      position: relative; z-index: 2;
+    }
+
+    .currently-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .currently-item {
+      background: var(--bg2);
+      padding: 1.75rem;
+    }
+
+    .currently-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem;
+    }
+    .currently-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--text); line-height: 1.3;
+    }
+    .currently-value.accent { color: var(--accent); }
+    .currently-value.accent2 { color: var(--accent2); }
+    .currently-value.accent3 { color: var(--accent3); }
+
+    /* ── CTA ── */
+    .about-cta {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 8rem;
+      position: relative; z-index: 2;
+    }
+    .about-cta-inner {
+      background: linear-gradient(135deg, rgba(56,189,248,0.06), rgba(167,139,250,0.04));
+      border: 1px solid rgba(56,189,248,0.15);
+      border-radius: 24px;
+      padding: 4rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 3rem;
+      align-items: center;
+    }
+    .about-cta-inner h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.75rem;
+    }
+    .about-cta-inner p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+    .cta-btns { display: flex; flex-direction: column; gap: 0.75rem; white-space: nowrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center;
+      color: var(--muted); font-size: 0.8rem;
+      position: relative; z-index: 2;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(56,189,248,0.3); border-radius: 3px; }
+
+    @media (max-width: 860px) {
+      .intro { grid-template-columns: 1fr; gap: 3rem; padding-top: 6rem; text-align: center; }
+      .avatar-wrap { margin: 0 auto; }
+      .avatar-badge { bottom: 0; right: 0; }
+      .flag-badge { top: 0; left: 0; }
+      .intro-role { justify-content: center; }
+      .intro-actions { justify-content: center; }
+      .about-cta-inner { grid-template-columns: 1fr; text-align: center; }
+      .cta-btns { flex-direction: row; justify-content: center; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">WK<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html" class="nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- INTRO -->
+<section class="intro">
+
+  <div class="intro-left" style="animation: fadeUp 0.8s ease both;">
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar-ring-mask"></div>
+      <!-- Replace src your real photo: assets/images/avatar.jpg -->
+      <img src="assets/images/avatar.jpg" alt="Waheed Tunde Kehinde" class="avatar-placeholder" />
+    </div>
+    <div class="flag-badge">🇳🇬 → 🇩🇪</div>
+    <div class="avatar-badge">
+      <div class="avatar-badge-dot"></div>
+      <span>Open to opportunities</span>
+    </div>
+  </div>
+
+  <div class="intro-right" style="animation: fadeUp 0.8s 0.15s ease both;">
+    <p class="page-label">The person behind the data</p>
+    <h1 class="intro-name">Waheed<br>Tunde Kehinde</h1>
+    <p class="intro-role">
+      <span>Data Scientist</span>
+      <span class="sep">·</span>
+      <span>ML Engineer</span>
+      <span class="sep">·</span>
+      <span>AI Engineer</span>
+    </p>
+
+    <p class="intro-story">
+      Before data science, I spent years in <strong>logistics and operations</strong>
+      preparing vehicle inventories for resale and managing material flows in recycling.
+      I learned to think in <em>systems</em>: inputs, outputs, bottlenecks, waste.
+    </p>
+
+    <div class="pull-quote">
+      <p>"When I discovered data science, I realised I'd been solving the same problems manually all along. Now I build the intelligent systems that do it at scale."</p>
+    </div>
+
+    <p class="intro-story">
+      Originally from <strong>Nigeria</strong>, now based in <strong>Germany</strong>,
+      I bring a global perspective and a deep appreciation for efficiency to every problem I work on.
+      I'm drawn to work where data isn't just reported, but actually <em>changes a decision</em>.
+    </p>
+
+    <div class="intro-actions" style="margin-top: 2rem;">
+      <a href="projects.html" class="btn-primary">See my projects →</a>
+      <a href="contact.html" class="btn-ghost">Get in touch</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- JOURNEY -->
+<section class="journey">
+  <p class="section-label reveal">My path</p>
+  <h2 class="section-title reveal">From operations<br>to <span>intelligent systems</span></h2>
+
+  <div class="timeline">
+
+    <div class="tl-item reveal">
+      <div class="tl-dot orange"></div>
+      <p class="tl-year orange">Operations Era</p>
+      <h3 class="tl-title">Logistics & Operations - Germany</h3>
+      <p class="tl-desc">
+        Worked across vehicle preparation logistics and industrial recycling operations.
+        Built strong instincts for <strong>process flow, efficiency, and reducing waste</strong>
+        skills that translate directly into data engineering and ML pipelines.
+      </p>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot blue"></div>
+      <p class="tl-year blue">The Pivot</p>
+      <h3 class="tl-title">Relocated to Germany - Decision to go into Tech</h3>
+      <p class="tl-desc">
+        Moving to Germany opened a new chapter. I made the deliberate decision to transition
+        into technology - choosing data science because it sat at the intersection of
+        <strong>analytical thinking, real-world systems, and future impact</strong>.
+      </p>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot purple"></div>
+      <p class="tl-year purple">2025 - Present</p>
+      <h3 class="tl-title">Data Science Bootcamp - Full Stack Training</h3>
+      <p class="tl-desc">
+        Intensive training covering the full data science stack: Python, SQL, machine learning,
+        deep learning, cloud pipelines, and AI engineering. Built a growing portfolio across
+        analytics, NLP, computer vision, data engineering, and full-stack applications.
+      </p>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-dot green"></div>
+      <p class="tl-year green">Now</p>
+      <h3 class="tl-title">Building in Public · Ready for Professional Roles</h3>
+      <p class="tl-desc">
+        Building data and AI products, including review analytics and a care-operations dashboard.
+        Actively seeking roles where I can contribute to <strong>data-driven products
+        that solve real problems</strong> for real people.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+  <p class="section-label reveal">How I work</p>
+  <h2 class="section-title reveal">Principles I bring<br>to every <span>project</span></h2>
+
+  <div class="values-grid">
+    <div class="value-card reveal">
+      <div class="value-icon">🎯</div>
+      <h3 class="value-title">Systems Thinking</h3>
+      <p class="value-desc">Years in logistics taught me to see the whole flow  not just individual steps. I design data solutions that hold together end-to-end.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon">📦</div>
+      <h3 class="value-title">Ship Real Things</h3>
+      <p class="value-desc">I don't stop at notebooks. I build things that run APIs, dashboards, pipelines, deployed models. Code that works outside my laptop matters.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon">🔍</div>
+      <h3 class="value-title">Rigour Over Speed</h3>
+      <p class="value-desc">I take the time to understand the data, validate assumptions, and make results explainable. Insight without integrity is noise.</p>
+    </div>
+    <div class="value-card reveal">
+      <div class="value-icon">🌍</div>
+      <h3 class="value-title">Global Perspective</h3>
+      <p class="value-desc">Growing up in Nigeria and working in Germany gives me an instinct for diverse contexts essential for data that reflects the real world.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CURRENTLY -->
+<section class="currently">
+  <p class="section-label reveal">Right now</p>
+  <h2 class="section-title reveal" style="margin-bottom:2rem">Currently</h2>
+
+  <div class="currently-grid reveal">
+    <div class="currently-item">
+      <p class="currently-label">Location</p>
+      <p class="currently-value">Germany 🇩🇪</p>
+    </div>
+    <div class="currently-item">
+      <p class="currently-label">Status</p>
+      <p class="currently-value accent3">Open to hire</p>
+    </div>
+    <div class="currently-item">
+      <p class="currently-label">Building</p>
+      <p class="currently-value accent2">Review Analytics + Care Operations Dashboard</p>
+    </div>
+    <div class="currently-item">
+      <p class="currently-label">Learning</p>
+      <p class="currently-value accent">MLOps & LLM Agents</p>
+    </div>
+    <div class="currently-item">
+      <p class="currently-label">Target roles</p>
+      <p class="currently-value">Data Scientist · ML Engineer · AI Engineer</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="about-cta">
+  <div class="about-cta-inner reveal">
+    <div>
+      <h2>Let's work on something meaningful together.</h2>
+      <p>I'm open to full-time roles, contracts, and collaborations across data science, machine learning, and AI engineering. Based in Germany, open to remote.</p>
+    </div>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn-primary">Get in touch →</a>
+      <a href="projects.html" class="btn-ghost">View my work</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built by <a href="about.html">Waheed Tunde Kehinde</a> · Data Scientist & AI Engineer · Germany</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 90);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+</script>
+</body>
+</html>

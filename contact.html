@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — Waheed Tunde Kehinde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #06090f;
+      --bg2: #0d1420;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f4f8;
+      --muted: #7d8fa3;
+      --accent: #38bdf8;
+      --accent2: #a78bfa;
+      --accent3: #34d399;
+      --accent4: #fb923c;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 100% 50% at 50% 0%, black 20%, transparent 100%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%;
+      pointer-events: none; z-index: 0;
+      filter: blur(120px); opacity: 0.09;
+    }
+    .orb-1 { width: 600px; height: 600px; background: #38bdf8; top: -200px; right: -150px; }
+    .orb-2 { width: 500px; height: 500px; background: #a78bfa; bottom: -100px; left: -100px; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2rem; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(6,9,15,0.75); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.875rem; padding: 0.4rem 0.9rem; border-radius: 8px; transition: all 0.2s; }
+    .nav-links a:hover { color: var(--text); background: var(--surface); }
+    .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent) !important; color: #06090f !important; font-weight: 600 !important; border-radius: 8px; }
+
+    .page-header {
+      padding: 10rem 2rem 3rem;
+      max-width: 1200px; margin: 0 auto;
+      position: relative; z-index: 2;
+      text-align: center;
+    }
+    .page-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+      animation: fadeUp 0.7s ease both;
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -0.04em;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .page-title span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-sub {
+      color: var(--muted); font-size: 1rem; max-width: 480px;
+      margin: 0 auto; line-height: 1.75;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .availability {
+      display: flex; justify-content: center; gap: 2px;
+      max-width: 700px; margin: 2.5rem auto 0;
+      background: var(--border); border-radius: 14px; overflow: hidden;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .avail-item { flex: 1; background: var(--bg2); padding: 1rem; text-align: center; }
+    .avail-icon { font-size: 1.3rem; margin-bottom: 0.3rem; }
+    .avail-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.2rem; }
+    .avail-value { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; }
+    .avail-value.green { color: var(--accent3); }
+    .avail-value.blue { color: var(--accent); }
+    .avail-value.purple { color: var(--accent2); }
+
+    .contact-layout {
+      max-width: 1100px; margin: 4rem auto 0;
+      padding: 0 2rem 8rem;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3rem;
+      position: relative; z-index: 2;
+      align-items: start;
+    }
+
+    .contact-section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 800;
+      letter-spacing: -0.01em; margin-bottom: 1.25rem; color: var(--text);
+    }
+
+    .channels { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2.5rem; }
+
+    .channel {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1rem 1.25rem;
+      text-decoration: none; color: inherit;
+      transition: all 0.25s;
+    }
+    .channel:hover { border-color: rgba(56,189,248,0.3); transform: translateX(4px); }
+
+    .channel-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .channel-icon.blue { background: rgba(56,189,248,0.1); }
+    .channel-icon.dark { background: rgba(255,255,255,0.06); }
+
+    .channel-info { flex: 1; }
+    .channel-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
+    .channel-value { font-size: 0.9rem; font-weight: 500; color: var(--text); }
+    .channel-arrow { color: var(--muted); font-size: 1rem; transition: transform 0.2s, color 0.2s; }
+    .channel:hover .channel-arrow { transform: translate(3px,-3px); color: var(--accent); }
+
+    .open-to-grid { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2rem; }
+    .open-to-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.875rem; color: var(--muted); padding: 0.4rem 0;
+    }
+    .open-to-item::before {
+      content: '✓'; width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(52,211,153,0.12); color: var(--accent3);
+      font-size: 0.7rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .open-to-item strong { color: var(--text); font-weight: 500; }
+
+    .response-box {
+      background: rgba(56,189,248,0.05); border: 1px solid rgba(56,189,248,0.15);
+      border-radius: 12px; padding: 1rem 1.25rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .response-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--accent3);
+      flex-shrink: 0; animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
+    .response-text { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+    .response-text strong { color: var(--text); font-weight: 500; }
+
+    .form-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 2.25rem;
+    }
+    .form-title { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 800; margin-bottom: 0.4rem; }
+    .form-sub { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+    .form-group label { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.85rem 1rem;
+      color: var(--text); font-family: inherit; font-size: 0.9rem;
+      transition: border-color 0.2s, background 0.2s; width: 100%;
+      appearance: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--muted); }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none; border-color: var(--accent); background: rgba(56,189,248,0.04);
+    }
+    .form-group textarea { min-height: 130px; resize: vertical; }
+    .form-group select option { background: #0d1420; color: var(--text); }
+
+    .form-submit {
+      width: 100%; background: var(--accent); color: #06090f;
+      border: none; padding: 1rem; border-radius: 10px;
+      font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(56,189,248,0.3); }
+    .form-submit.sending { opacity: 0.7; pointer-events: none; }
+
+    .success-state {
+      display: none; text-align: center; padding: 3rem 1rem;
+    }
+    .success-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; margin: 0 auto 1.5rem;
+    }
+    .success-state h3 { font-family: 'Syne', sans-serif; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .success-state p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem; text-align: center;
+      color: var(--muted); font-size: 0.8rem; position: relative; z-index: 2;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)} }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(56,189,248,0.3); border-radius: 3px; }
+
+    @media (max-width: 860px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .availability { flex-wrap: wrap; }
+      .avail-item { min-width: 45%; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo">WK<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html" class="active nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="page-label">Get in touch</p>
+  <h1 class="page-title">Let's build something<br><span>worth talking about</span></h1>
+  <p class="page-sub">Open to data science, ML engineering, and AI roles — full-time, contract, or collaboration. Based in Germany, open to remote worldwide.</p>
+
+  <div class="availability">
+    <div class="avail-item">
+      <div class="avail-icon">🟢</div>
+      <div class="avail-label">Status</div>
+      <div class="avail-value green">Available now</div>
+    </div>
+    <div class="avail-item">
+      <div class="avail-icon">📍</div>
+      <div class="avail-label">Location</div>
+      <div class="avail-value blue">Germany · Remote</div>
+    </div>
+    <div class="avail-item">
+      <div class="avail-icon">⚡</div>
+      <div class="avail-label">Response</div>
+      <div class="avail-value purple">Within 24 hrs</div>
+    </div>
+    <div class="avail-item">
+      <div class="avail-icon">🌍</div>
+      <div class="avail-label">Open to</div>
+      <div class="avail-value">Global opportunities</div>
+    </div>
+  </div>
+</div>
+
+<div class="contact-layout">
+
+  <div class="contact-left reveal">
+    <p class="contact-section-title">Reach me directly</p>
+    <div class="channels">
+      <!-- UPDATE with your real email -->
+      <a href="mailto:waydem002@yahoo.com" class="channel">
+        <div class="channel-icon blue">✉️</div>
+        <div class="channel-info">
+          <p class="channel-label">Email</p>
+          <p class="channel-value">waydem002@yahoo.com</p>
+        </div>
+        <span class="channel-arrow">↗</span>
+      </a>
+      <!-- UPDATE with your real LinkedIn -->
+      <a href="https://linkedin.com/in/waheed-kehinde-44296b51/" target="_blank" class="channel">
+        <div class="channel-icon blue">💼</div>
+        <div class="channel-info">
+          <p class="channel-label">LinkedIn</p>
+          <p class="channel-value">linkedin.com/in/waheed-kehinde-44296b51/</p>
+        </div>
+        <span class="channel-arrow">↗</span>
+      </a>
+      <a href="https://github.com/waydem002" target="_blank" class="channel">
+        <div class="channel-icon dark">🐙</div>
+        <div class="channel-info">
+          <p class="channel-label">GitHub</p>
+          <p class="channel-value">github.com/waydem002</p>
+        </div>
+        <span class="channel-arrow">↗</span>
+      </a>
+    </div>
+
+    <p class="contact-section-title">I'm open to</p>
+    <div class="open-to-grid">
+      <div class="open-to-item"><strong>Full-time roles</strong> — Data Scientist, ML Engineer, AI Engineer</div>
+      <div class="open-to-item"><strong>Contract & freelance</strong> — analytics, pipelines, dashboards</div>
+      <div class="open-to-item"><strong>Collaborations</strong> — open source, research, side projects</div>
+      <div class="open-to-item"><strong>Remote</strong> — globally, or on-site in Germany</div>
+    </div>
+
+    <div class="response-box" style="margin-top: 1.5rem;">
+      <div class="response-dot"></div>
+      <p class="response-text"><strong>Typically responds within 24 hours.</strong> For urgent enquiries, email directly — I check it daily.</p>
+    </div>
+  </div>
+
+  <div class="contact-right reveal">
+    <div class="form-card">
+      <div id="form-content">
+        <h2 class="form-title">Send a message</h2>
+        <p class="form-sub">Whether it's a job opportunity, a project idea, or just a hello — I'd love to hear from you.</p>
+
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input id="name" type="text" placeholder="Jane Smith" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input id="email" type="email" placeholder="jane@company.com" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject">What's this about?</label>
+            <select id="subject">
+              <option value="" disabled selected>Select a topic…</option>
+              <option value="job">Job opportunity / hiring</option>
+              <option value="contract">Contract or freelance work</option>
+              <option value="collab">Project collaboration</option>
+              <option value="other">Just saying hello</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" placeholder="Tell me about the role, project, or what you have in mind…" required></textarea>
+          </div>
+
+          <button type="submit" class="form-submit" id="submit-btn">
+            <span id="btn-text">Send Message</span>
+            <span id="btn-icon">→</span>
+          </button>
+        </form>
+      </div>
+
+      <div class="success-state" id="success-state">
+        <div class="success-icon">✓</div>
+        <h3>Message sent!</h3>
+        <p>Thanks for reaching out. I'll get back to you within 24 hours — looking forward to the conversation.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>Built by <a href="about.html">Waheed Tunde Kehinde</a> · Data Scientist & AI Engineer · Germany</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 100);
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+const form = document.getElementById('contact-form');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name');
+  const email = document.getElementById('email');
+  const message = document.getElementById('message');
+  const btn = document.getElementById('submit-btn');
+
+  let valid = true;
+  [name, email, message].forEach(el => {
+    if (!el.value.trim()) {
+      el.style.borderColor = '#f87171';
+      el.style.animation = 'shake 0.4s ease';
+      setTimeout(() => { el.style.borderColor = ''; el.style.animation = ''; }, 800);
+      valid = false;
+    }
+  });
+  if (!valid) return;
+
+  btn.classList.add('sending');
+  document.getElementById('btn-text').textContent = 'Sending…';
+  document.getElementById('btn-icon').textContent = '⏳';
+
+  setTimeout(() => {
+    document.getElementById('form-content').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+  }, 1400);
+});
+
+['name','email','message'].forEach(id => {
+  document.getElementById(id).addEventListener('input', function() { this.style.borderColor = ''; });
+});
+</script>
+</body>
+</html>

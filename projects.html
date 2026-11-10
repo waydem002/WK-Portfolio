@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Waheed Tunde Kehinde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #06090f;
+      --bg2: #0d1420;
+      --surface: rgba(255,255,255,0.04);
+      --surface-hover: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f4f8;
+      --muted: #7d8fa3;
+      --accent: #38bdf8;
+      --accent2: #a78bfa;
+      --accent3: #34d399;
+      --accent4: #fb923c;
+      --accent5: #f472b6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 100% 60% at 50% 0%, black 20%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(120px);
+      opacity: 0.08;
+    }
+    .orb-1 { width: 700px; height: 700px; background: #38bdf8; top: -300px; right: -200px; }
+    .orb-2 { width: 500px; height: 500px; background: #a78bfa; bottom: 0; left: -100px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2rem; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(6,9,15,0.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.875rem; padding: 0.4rem 0.9rem; border-radius: 8px; transition: all 0.2s; }
+    .nav-links a:hover { color: var(--text); background: var(--surface); }
+    .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent) !important; color: #06090f !important; font-weight: 600 !important; border-radius: 8px; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 10rem 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .page-label {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+      animation: fadeUp 0.7s ease both;
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -0.04em;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .page-title span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-sub {
+      color: var(--muted); font-size: 1rem; max-width: 540px; line-height: 1.75;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    /* ── FILTER BAR ── */
+    .filter-bar {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 3rem;
+      display: flex; gap: 0.5rem; flex-wrap: wrap;
+      position: relative; z-index: 2;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .filter-btn {
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); padding: 0.45rem 1.1rem;
+      border-radius: 999px; font-size: 0.8rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s; font-family: inherit;
+    }
+    .filter-btn:hover { border-color: rgba(56,189,248,0.3); color: var(--text); }
+    .filter-btn.active {
+      background: rgba(56,189,248,0.12);
+      border-color: rgba(56,189,248,0.35);
+      color: var(--accent);
+    }
+
+    /* ── PROJECTS LAYOUT ── */
+    .projects-container {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 8rem;
+      position: relative; z-index: 2;
+    }
+
+    /* ── SECTION DIVIDER ── */
+    .proj-section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+      margin-top: 3rem;
+    }
+    .proj-section-label:first-child { margin-top: 0; }
+
+    /* ── FEATURED CARD (full-width horizontal) ── */
+    .card-featured {
+      display: grid;
+      grid-template-columns: 1fr 1.8fr;
+      gap: 0;
+      background: var(--bg2);
+      border: 1px solid rgba(56,189,248,0.18);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .card-featured::after {
+      content: '';
+      position: absolute;
+      inset: 0; border-radius: 20px;
+      background: linear-gradient(135deg, rgba(56,189,248,0.04), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card-featured:hover { transform: translateY(-3px); box-shadow: 0 24px 80px rgba(0,0,0,0.5); border-color: rgba(56,189,248,0.35); }
+    .card-featured:hover::after { opacity: 1; }
+
+    .card-featured-visual {
+      background: linear-gradient(135deg, #0d1f35, #0f1a2e);
+      display: flex; align-items: center; justify-content: center;
+      min-height: 260px; position: relative; overflow: hidden;
+    }
+    .card-featured-visual .big-icon {
+      font-size: 5rem; opacity: 0.8;
+      filter: drop-shadow(0 0 40px rgba(56,189,248,0.3));
+    }
+    .card-featured-visual .visual-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(56,189,248,0.08) 0%, transparent 70%);
+    }
+    .card-featured-visual .badge-live {
+      position: absolute; top: 1rem; left: 1rem;
+      background: rgba(52,211,153,0.15); border: 1px solid rgba(52,211,153,0.3);
+      color: var(--accent3); font-size: 0.7rem; font-weight: 600;
+      padding: 0.25rem 0.7rem; border-radius: 999px; letter-spacing: 0.06em;
+    }
+
+    .card-featured-body {
+      padding: 2.25rem 2.25rem;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .card-domain {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 0.6rem;
+    }
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem; font-weight: 800;
+      letter-spacing: -0.02em; margin-bottom: 0.75rem;
+      line-height: 1.25;
+    }
+    .card-desc {
+      font-size: 0.9rem; color: var(--muted); line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+    .card-impact {
+      background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.15);
+      border-radius: 10px; padding: 0.75rem 1rem;
+      margin-bottom: 1.25rem; font-size: 0.85rem;
+    }
+    .card-impact strong { color: var(--accent3); font-weight: 600; }
+    .card-impact span { color: var(--muted); }
+    .card-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+    .tag {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      color: var(--muted); padding: 0.2rem 0.65rem;
+      border-radius: 6px; font-size: 0.72rem; font-weight: 500;
+    }
+    .card-links { display: flex; gap: 0.75rem; }
+    .card-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.82rem; font-weight: 600; text-decoration: none;
+      padding: 0.5rem 1rem; border-radius: 8px; transition: all 0.2s;
+    }
+    .card-link.primary {
+      background: var(--accent); color: #06090f;
+    }
+    .card-link.primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .card-link.ghost {
+      background: transparent; color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .card-link.ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+
+    /* ── STANDARD GRID ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+
+    /* ── STANDARD CARD ── */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.75rem;
+      text-decoration: none; color: inherit;
+      transition: all 0.3s ease;
+      display: flex; flex-direction: column; gap: 0.9rem;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: ''; position: absolute; inset: 0; border-radius: 18px;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+    .card:hover::before { opacity: 1; }
+
+    .card.blue:hover { border-color: rgba(56,189,248,0.3); }
+    .card.blue::before { background: linear-gradient(135deg, rgba(56,189,248,0.04), transparent); }
+    .card.purple:hover { border-color: rgba(167,139,250,0.3); }
+    .card.purple::before { background: linear-gradient(135deg, rgba(167,139,250,0.04), transparent); }
+    .card.green:hover { border-color: rgba(52,211,153,0.3); }
+    .card.green::before { background: linear-gradient(135deg, rgba(52,211,153,0.04), transparent); }
+    .card.orange:hover { border-color: rgba(251,146,60,0.3); }
+    .card.orange::before { background: linear-gradient(135deg, rgba(251,146,60,0.04), transparent); }
+    .card.pink:hover { border-color: rgba(244,114,182,0.3); }
+    .card.pink::before { background: linear-gradient(135deg, rgba(244,114,182,0.04), transparent); }
+
+    .card-icon-row {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-icon {
+      width: 46px; height: 46px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+    }
+    .card-icon.blue { background: rgba(56,189,248,0.1); }
+    .card-icon.purple { background: rgba(167,139,250,0.1); }
+    .card-icon.green { background: rgba(52,211,153,0.1); }
+    .card-icon.orange { background: rgba(251,146,60,0.1); }
+    .card-icon.pink { background: rgba(244,114,182,0.1); }
+
+    .status-badge {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase; padding: 0.25rem 0.65rem; border-radius: 999px;
+    }
+    .status-badge.live { background: rgba(52,211,153,0.1); color: var(--accent3); border: 1px solid rgba(52,211,153,0.2); }
+    .status-badge.wip { background: rgba(251,146,60,0.1); color: var(--accent4); border: 1px solid rgba(251,146,60,0.2); }
+    .status-badge.complete { background: rgba(56,189,248,0.1); color: var(--accent); border: 1px solid rgba(56,189,248,0.2); }
+
+    .card-domain-small {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .card-domain-small.blue { color: var(--accent); }
+    .card-domain-small.purple { color: var(--accent2); }
+    .card-domain-small.green { color: var(--accent3); }
+    .card-domain-small.orange { color: var(--accent4); }
+    .card-domain-small.pink { color: var(--accent5); }
+
+    .card-title-sm {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      letter-spacing: -0.02em; line-height: 1.3;
+    }
+    .card-desc-sm { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+    .card-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: auto; padding-top: 0.5rem;
+    }
+    .card-arrow { color: var(--muted); font-size: 1.1rem; transition: all 0.2s; }
+    .card:hover .card-arrow { transform: translate(3px,-3px); color: var(--accent); }
+
+    /* ── COMING SOON CARD ── */
+    .card.coming-soon {
+      opacity: 0.6;
+      border-style: dashed;
+    }
+    .card.coming-soon:hover { opacity: 0.85; transform: none; box-shadow: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem; text-align: center;
+      color: var(--muted); font-size: 0.8rem;
+      position: relative; z-index: 2;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(56,189,248,0.3); border-radius: 3px; }
+
+    @media (max-width: 800px) {
+      .card-featured { grid-template-columns: 1fr; }
+      .card-featured-visual { min-height: 180px; }
+      .nav-links { display: none; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">WK<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html">Skills</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+    <li><a href="contact.html" class="nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <p class="page-label">Portfolio</p>
+  <h1 class="page-title">Work that <span>solves real<br>business problems</span></h1>
+  <p class="page-sub">From SQL analytics to AI-powered pipelines — every project here started with a business question and ended with a working answer.</p>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <button class="filter-btn active" data-filter="all">All Projects</button>
+  <button class="filter-btn" data-filter="analytics">Analytics & SQL</button>
+  <button class="filter-btn" data-filter="ml">Machine Learning</button>
+  <button class="filter-btn" data-filter="ai">AI Engineering</button>
+  <button class="filter-btn" data-filter="pipeline">Data Pipelines</button>
+  <button class="filter-btn" data-filter="viz">Visualisation</button>
+</div>
+
+<!-- PROJECTS -->
+<div class="projects-container">
+
+  <!-- ── FEATURED ── -->
+  <p class="proj-section-label reveal">⭐ Featured Project</p>
+
+  <div class="card-featured reveal" data-tags="analytics viz sql">
+    <div class="card-featured-visual">
+      <div class="visual-bg"></div>
+      <div class="big-icon">🌍</div>
+      <span class="badge-live">Complete</span>
+    </div>
+    <div class="card-featured-body">
+      <div>
+        <p class="card-domain" style="color: var(--accent)">Analytics · SQL · Visualisation</p>
+        <h2 class="card-title">GoExplore E-Commerce Revenue Analysis</h2>
+        <p class="card-desc">
+          End-to-end revenue performance analysis spanning January 2015 to December 2017 across
+          <strong style="color:var(--text)">21 countries</strong>. Transformed raw sales data into
+          executive-ready dashboards to drive strategic pricing and product decisions — built entirely
+          on Google Cloud tools.
+        </p>
+        <div class="card-impact">
+          <strong>Business impact: </strong>
+          <span>Identified top-performing markets and revenue leakage patterns; delivered actionable insights across sales, profit, and product dimensions.</span>
+        </div>
+        <div class="card-stack">
+          <span class="tag">Google BigQuery</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Looker Studio</span>
+          <span class="tag">Google Sheets</span>
+          <span class="tag">Pivot Tables</span>
+        </div>
+      </div>
+      <div class="card-links">
+        <a href="projects/goexplore.html" class="card-link primary">View Case Study →</a>
+        <a href="https://github.com/waydem002/GoExplore-Revenue-Analysis-2015-2017-" target="_blank" rel="noopener noreferrer" class="card-link ghost">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── COMPLETED PROJECTS ── -->
+  <p class="proj-section-label reveal" style="margin-top: 3rem">Completed Projects</p>
+
+  <div class="projects-grid">
+
+    <a href="projects/eniac.magist.html" class="card purple reveal" data-tags="analytics sql viz">
+      <div class="card-icon-row">
+        <div class="card-icon purple">🛒</div>
+        <span class="status-badge complete">Complete</span>
+      </div>
+      <p class="card-domain-small purple">Business Intelligence · SQL</p>
+      <h3 class="card-title-sm">ENIAC & Magist — Market Entry Analysis</h3>
+      <p class="card-desc-sm">
+        Evaluated Magist's operational competence to assess contract viability for ENIAC's entry into the Brazilian e-commerce market. Analysed product diversity, delivery SLAs, and revenue fit across 12 months of transactions.
+      </p>
+      <div class="card-stack">
+        <span class="tag">SQL</span><span class="tag">Tableau</span><span class="tag">Google Slides</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small purple">Strategic Decision Analysis</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="projects/eniac-on-discount.html" class="card orange reveal" data-tags="analytics ml">
+      <div class="card-icon-row">
+        <div class="card-icon orange">📉</div>
+        <span class="status-badge complete">Complete</span>
+      </div>
+      <p class="card-domain-small orange">EDA · Python Analytics</p>
+      <h3 class="card-title-sm">ENIAC Discount Impact Study</h3>
+      <p class="card-desc-sm">
+        Investigated how discount levels affect product sales performance. Revealed that discounts below 25% drive volume for cheaper products, while seasonal campaigns (Black Friday, Christmas) produce the strongest spikes.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Seaborn</span><span class="tag">Matplotlib</span><span class="tag">NumPy</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small orange">Pricing Strategy</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="projects/ab-testing.html" class="card green reveal" data-tags="ml analytics">
+      <div class="card-icon-row">
+        <div class="card-icon green">🧪</div>
+        <span class="status-badge complete">Complete</span>
+      </div>
+      <p class="card-domain-small green">Statistics · A/B Testing</p>
+      <h3 class="card-title-sm">A/B Testing — CTA Button Optimisation</h3>
+      <p class="card-desc-sm">
+        Designed and analysed a controlled experiment testing "SHOP NOW" button variations (colour + copy). Used statistical significance testing to determine the highest-performing variant by Click-Through Rate.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Python</span><span class="tag">SciPy</span><span class="tag">Pandas</span><span class="tag">Tableau</span><span class="tag">Matplotlib</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small green">Conversion Optimisation</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="projects/azure_pipeline.html" class="card blue reveal" data-tags="pipeline">
+      <div class="card-icon-row">
+        <div class="card-icon blue">☁️</div>
+        <span class="status-badge complete">Complete</span>
+      </div>
+      <p class="card-domain-small blue">Data Engineering · Cloud</p>
+      <h3 class="card-title-sm">Azure End-to-End Data Pipeline</h3>
+      <p class="card-desc-sm">
+        Built a production-grade pipeline on Microsoft Azure covering data ingestion, cloud storage, transformation, and analytics. Hands-on experience across the full modern data stack.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Azure Data Factory</span><span class="tag">Azure Blob</span><span class="tag">Databricks</span><span class="tag">SQL</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small blue">Cloud Architecture</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="projects/Lianes-Library.html" class="card pink reveal" data-tags="analytics">
+      <div class="card-icon-row">
+        <div class="card-icon pink">📚</div>
+        <span class="status-badge complete">Complete</span>
+      </div>
+      <p class="card-domain-small pink">Python · Data Management</p>
+      <h3 class="card-title-sm">Liane's Library — Loan Tracker</h3>
+      <p class="card-desc-sm">
+        Personal book-loan tracking system — a focused Python project demonstrating data modelling, CRUD operations, and clean application logic for a real-world use case.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Python</span><span class="tag">Data Modelling</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small pink">Application Logic</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ── RECENT GITHUB PROJECTS ── -->
+  <p class="proj-section-label reveal" style="margin-top: 3.5rem">Recent GitHub Projects</p>
+
+  <div class="projects-grid">
+
+    <a href="https://github.com/waydem002/Data-interns-review-analysis-06-26" target="_blank" rel="noopener noreferrer" class="card purple reveal" data-tags="analytics ai">
+      <div class="card-icon-row">
+        <div class="card-icon purple">🤖</div>
+        <span class="status-badge complete">GitHub</span>
+      </div>
+      <p class="card-domain-small purple">Analytics · NLP · Dashboard</p>
+      <h3 class="card-title-sm">WBS Student Review Analytics</h3>
+      <p class="card-desc-sm">
+        Explores 777 collected reviews with statistical analysis, sentiment classification, review search, and a Streamlit dashboard. Findings describe this dataset, not all students.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Python</span><span class="tag">RoBERTa</span><span class="tag">ChromaDB</span><span class="tag">Streamlit</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small purple">Open repository</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/waydem002/care-mvp" target="_blank" rel="noopener noreferrer" class="card orange reveal" data-tags="pipeline ai">
+      <div class="card-icon-row">
+        <div class="card-icon orange">🏥</div>
+        <span class="status-badge complete">GitHub</span>
+      </div>
+      <p class="card-domain-small orange">Full-Stack · Care Operations</p>
+      <h3 class="card-title-sm">Care Operations Dashboard</h3>
+      <p class="card-desc-sm">
+        A Next.js and Supabase dashboard for patient and medication workflows, staffing, home-visit planning, booking requests, and document search. A prototype, not a complete EHR or compliance guarantee.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Next.js</span><span class="tag">Supabase</span><span class="tag">Tailwind CSS</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small orange">Open repository</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/waydem002/SMARTSPEND-AI-EXPENSE-AND-INFLATION-TRACKER-SYSTEM" target="_blank" rel="noopener noreferrer" class="card green reveal" data-tags="ml analytics">
+      <div class="card-icon-row">
+        <div class="card-icon green">💰</div>
+        <span class="status-badge wip">In Progress</span>
+      </div>
+      <p class="card-domain-small green">Personal Finance · Local-First</p>
+      <h3 class="card-title-sm">SmartSpend Expense & Inflation Tracker</h3>
+      <p class="card-desc-sm">
+        An actively developed beta with authenticated expense tracking, monthly summaries, inflation-adjusted values, private receipt uploads, local OCR previews, and CSV export.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Python</span><span class="tag">SQLite</span><span class="tag">OCR</span><span class="tag">Vite</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small green">Active beta</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/waydem002/Smart-Waste-Recycling-System" target="_blank" rel="noopener noreferrer" class="card blue reveal" data-tags="ai pipeline">
+      <div class="card-icon-row">
+        <div class="card-icon blue">♻️</div>
+        <span class="status-badge complete">GitHub</span>
+      </div>
+      <p class="card-domain-small blue">Computer Vision · AI</p>
+      <h3 class="card-title-sm">Smart Waste Recycling System</h3>
+      <p class="card-desc-sm">
+        A waste-recognition and recycling-guidance system for Germany, combining computer vision, a local knowledge base, and a multilingual web interface.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Computer Vision</span><span class="tag">RAG</span><span class="tag">Multilingual</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small blue">Open repository</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/waydem002/BeeHaven-Data-Platform-End-to-End-Azure-Data-Engineering" target="_blank" rel="noopener noreferrer" class="card purple reveal" data-tags="pipeline analytics">
+      <div class="card-icon-row">
+        <div class="card-icon purple">☁️</div>
+        <span class="status-badge complete">GitHub</span>
+      </div>
+      <p class="card-domain-small purple">Azure · Data Engineering</p>
+      <h3 class="card-title-sm">BeeHaven Azure Data Platform</h3>
+      <p class="card-desc-sm">
+        An Azure lakehouse workflow using Data Factory, Synapse Spark, and Data Lake Storage Gen2 to transform data through Bronze, Silver, and Gold layers.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Azure Data Factory</span><span class="tag">Synapse Spark</span><span class="tag">ADLS Gen2</span><span class="tag">Medallion Architecture</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small purple">Open repository</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/waydem002/whatsapp-sales-assistance" target="_blank" rel="noopener noreferrer" class="card green reveal" data-tags="ai">
+      <div class="card-icon-row">
+        <div class="card-icon green">💬</div>
+        <span class="status-badge complete">GitHub</span>
+      </div>
+      <p class="card-domain-small green">Conversational AI · Retail</p>
+      <h3 class="card-title-sm">WhatsApp Sales Bot</h3>
+      <p class="card-desc-sm">
+        A Node.js sales bot for multiple retail stores, with Groq-powered replies, customer-intent filtering, per-customer conversation memory, and store-specific catalog and shipping rules.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Node.js</span><span class="tag">Baileys</span><span class="tag">Groq</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small green">Open repository</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/waydem002/sentiment-analysis-project" target="_blank" rel="noopener noreferrer" class="card blue reveal" data-tags="ml analytics">
+      <div class="card-icon-row">
+        <div class="card-icon blue">🧠</div>
+        <span class="status-badge complete">GitHub</span>
+      </div>
+      <p class="card-domain-small blue">Machine Learning · NLP</p>
+      <h3 class="card-title-sm">Sentiment Analysis Pipeline</h3>
+      <p class="card-desc-sm">
+        A trainable text-classification pipeline with preprocessing, command-line predictions, pytest coverage, Ruff checks, Docker support, and continuous integration.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small blue">Open repository</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/waydem002/RAG-Evaluation-Multi-Document-Intelligence-Knowledge-Studio-Framework" target="_blank" rel="noopener noreferrer" class="card purple reveal" data-tags="ai ml">
+      <div class="card-icon-row">
+        <div class="card-icon purple">📚</div>
+        <span class="status-badge complete">GitHub</span>
+      </div>
+      <p class="card-domain-small purple">RAG · Evaluation · Multimodal</p>
+      <h3 class="card-title-sm">RAG Evaluation & Knowledge Studio</h3>
+      <p class="card-desc-sm">
+        A test lab for measuring retrieval-augmented generation quality with Ragas metrics, paired with a multimodal knowledge-studio workflow.
+      </p>
+      <div class="card-stack">
+        <span class="tag">RAG</span><span class="tag">Ragas</span><span class="tag">Multimodal AI</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small purple">Open repository</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/waydem002/AI-Video-Factory" target="_blank" rel="noopener noreferrer" class="card orange reveal" data-tags="ai">
+      <div class="card-icon-row">
+        <div class="card-icon orange">🎬</div>
+        <span class="status-badge complete">GitHub</span>
+      </div>
+      <p class="card-domain-small orange">Generative AI · Media Automation</p>
+      <h3 class="card-title-sm">AI Video Factory</h3>
+      <p class="card-desc-sm">
+        An automated video workflow that drafts scripts and metadata, generates narration and visuals, assembles a video, and can upload it to YouTube.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Python</span><span class="tag">Groq</span><span class="tag">MoviePy</span><span class="tag">YouTube API</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small orange">Open repository</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/waydem002/crypto-forecast-app" target="_blank" rel="noopener noreferrer" class="card green reveal" data-tags="ai ml">
+      <div class="card-icon-row">
+        <div class="card-icon green">📈</div>
+        <span class="status-badge complete">GitHub</span>
+      </div>
+      <p class="card-domain-small green">AI · Market Data</p>
+      <h3 class="card-title-sm">Crypto Forecast AI</h3>
+      <p class="card-desc-sm">
+        A forecasting prototype with live market scanning, filtered trading signals, trade monitoring, Telegram alerts, and a React dashboard. It is a software project, not financial advice.
+      </p>
+      <div class="card-stack">
+        <span class="tag">AI</span><span class="tag">React</span><span class="tag">Telegram</span><span class="tag">Market Data</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small green">Open repository</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+    <a href="https://github.com/waydem002/fraud-detection-app" target="_blank" rel="noopener noreferrer" class="card pink reveal" data-tags="ml analytics">
+      <div class="card-icon-row">
+        <div class="card-icon pink">🛡️</div>
+        <span class="status-badge wip">In Progress</span>
+      </div>
+      <p class="card-domain-small pink">Machine Learning · Risk Analytics</p>
+      <h3 class="card-title-sm">Fraud Detection System</h3>
+      <p class="card-desc-sm">
+        An early-stage project exploring highly imbalanced transaction data, reusable data-processing foundations, and evaluation focused on precision and recall rather than accuracy alone.
+      </p>
+      <div class="card-stack">
+        <span class="tag">Python</span><span class="tag">scikit-learn</span><span class="tag">imbalanced-learn</span>
+      </div>
+      <div class="card-bottom">
+        <span class="card-domain-small pink">Early development</span>
+        <span class="card-arrow">↗</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <p>Built by <a href="about.html">Waheed Tunde Kehinde</a> · Data Scientist & AI Engineer</p>
+</footer>
+
+<script>
+// ── FILTER ──
+const btns = document.querySelectorAll('.filter-btn');
+const cards = document.querySelectorAll('[data-tags]');
+
+btns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    btns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.filter;
+    cards.forEach(card => {
+      const tags = card.dataset.tags || '';
+      const show = f === 'all' || tags.includes(f);
+      card.style.opacity = show ? '' : '0.15';
+      card.style.transform = show ? '' : 'scale(0.97)';
+      card.style.pointerEvents = show ? '' : 'none';
+      card.style.transition = 'opacity 0.3s, transform 0.3s';
+    });
+  });
+});
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 70);
+    }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+</script>
+</body>
+</html>

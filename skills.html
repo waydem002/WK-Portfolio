@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skills — Waheed Tunde Kehinde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #06090f;
+      --bg2: #0d1420;
+      --surface: rgba(255,255,255,0.04);
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f4f8;
+      --muted: #7d8fa3;
+      --accent: #38bdf8;
+      --accent2: #a78bfa;
+      --accent3: #34d399;
+      --accent4: #fb923c;
+      --accent5: #f472b6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(56,189,248,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56,189,248,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 100% 50% at 50% 0%, black 20%, transparent 100%);
+      pointer-events: none; z-index: 0;
+    }
+
+    .orb {
+      position: fixed; border-radius: 50%;
+      pointer-events: none; z-index: 0;
+      filter: blur(120px); opacity: 0.08;
+    }
+    .orb-1 { width: 700px; height: 700px; background: #38bdf8; top: -300px; left: -200px; }
+    .orb-2 { width: 500px; height: 500px; background: #a78bfa; bottom: 0; right: -100px; }
+    .orb-3 { width: 400px; height: 400px; background: #34d399; top: 50%; left: 50%; transform: translate(-50%,-50%); opacity: 0.05; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 2rem; height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(6,9,15,0.75); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 0.25rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.875rem; padding: 0.4rem 0.9rem; border-radius: 8px; transition: all 0.2s; }
+    .nav-links a:hover { color: var(--text); background: var(--surface); }
+    .nav-links a.active { color: var(--accent); }
+    .nav-cta { background: var(--accent) !important; color: #06090f !important; font-weight: 600 !important; border-radius: 8px; }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 10rem 2rem 4rem;
+      max-width: 1200px; margin: 0 auto;
+      position: relative; z-index: 2;
+    }
+    .page-label {
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem;
+      animation: fadeUp 0.7s ease both;
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800; line-height: 1.05; letter-spacing: -0.04em;
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    .page-title span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .page-sub {
+      color: var(--muted); font-size: 1rem; max-width: 540px; line-height: 1.75;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    /* ── PROFICIENCY LEGEND ── */
+    .legend {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      margin-top: 2rem;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--muted); }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .legend-dot.expert { background: var(--accent3); }
+    .legend-dot.proficient { background: var(--accent); }
+    .legend-dot.learning { background: var(--accent4); }
+
+    /* ── WRAPPER ── */
+    .skills-wrapper {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 2rem 8rem;
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; gap: 4rem;
+    }
+
+    /* ── CATEGORY BLOCK ── */
+    .category-header {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .category-icon {
+      width: 42px; height: 42px; border-radius: 11px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .category-icon.blue { background: rgba(56,189,248,0.1); }
+    .category-icon.purple { background: rgba(167,139,250,0.1); }
+    .category-icon.green { background: rgba(52,211,153,0.1); }
+    .category-icon.orange { background: rgba(251,146,60,0.1); }
+    .category-icon.pink { background: rgba(244,114,182,0.1); }
+    .category-icon.teal { background: rgba(45,212,191,0.1); }
+
+    .category-meta { flex: 1; }
+    .category-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem; font-weight: 800; color: var(--text);
+      margin-bottom: 0.2rem; letter-spacing: -0.01em;
+    }
+    .category-desc { font-size: 0.8rem; color: var(--muted); }
+
+    .category-count {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.5rem; font-weight: 800;
+    }
+    .category-count.blue { color: var(--accent); }
+    .category-count.purple { color: var(--accent2); }
+    .category-count.green { color: var(--accent3); }
+    .category-count.orange { color: var(--accent4); }
+    .category-count.pink { color: var(--accent5); }
+    .category-count.teal { color: #2dd4bf; }
+
+    /* ── SKILL PILLS GRID ── */
+    .skills-pills {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+    }
+
+    .skill-pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.55rem 1rem;
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--text);
+      transition: all 0.25s;
+      cursor: default;
+    }
+    .skill-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .skill-pill .pill-dot {
+      width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+    }
+    .pill-dot.expert { background: var(--accent3); }
+    .pill-dot.proficient { background: var(--accent); }
+    .pill-dot.learning { background: var(--accent4); }
+
+    /* colour tints per category on hover */
+    .cat-blue .skill-pill:hover { border-color: rgba(56,189,248,0.35); background: rgba(56,189,248,0.06); }
+    .cat-purple .skill-pill:hover { border-color: rgba(167,139,250,0.35); background: rgba(167,139,250,0.06); }
+    .cat-green .skill-pill:hover { border-color: rgba(52,211,153,0.35); background: rgba(52,211,153,0.06); }
+    .cat-orange .skill-pill:hover { border-color: rgba(251,146,60,0.35); background: rgba(251,146,60,0.06); }
+    .cat-pink .skill-pill:hover { border-color: rgba(244,114,182,0.35); background: rgba(244,114,182,0.06); }
+    .cat-teal .skill-pill:hover { border-color: rgba(45,212,191,0.35); background: rgba(45,212,191,0.06); }
+
+    /* ── PROFICIENCY BARS (for core tools) ── */
+    .proficiency-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 0.9rem;
+      margin-top: 0.5rem;
+    }
+
+    .prof-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .prof-item:hover { border-color: rgba(56,189,248,0.2); }
+
+    .prof-top {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 0.6rem;
+    }
+    .prof-name { font-size: 0.875rem; font-weight: 500; color: var(--text); }
+    .prof-pct { font-family: 'Syne', sans-serif; font-size: 0.8rem; font-weight: 700; }
+    .prof-pct.blue { color: var(--accent); }
+    .prof-pct.purple { color: var(--accent2); }
+    .prof-pct.green { color: var(--accent3); }
+    .prof-pct.orange { color: var(--accent4); }
+
+    .prof-bar-bg {
+      height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;
+    }
+    .prof-bar {
+      height: 100%; border-radius: 2px;
+      width: 0;
+      transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .prof-bar.blue { background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+    .prof-bar.purple { background: linear-gradient(90deg, var(--accent2), var(--accent5)); }
+    .prof-bar.green { background: linear-gradient(90deg, var(--accent3), var(--accent)); }
+    .prof-bar.orange { background: linear-gradient(90deg, var(--accent4), var(--accent2)); }
+
+    /* ── TOOLS ICON GRID ── */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 0.75rem;
+      text-align: center;
+      transition: all 0.25s;
+    }
+    .tool-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-color: rgba(56,189,248,0.2); }
+    .tool-emoji { font-size: 1.75rem; margin-bottom: 0.5rem; }
+    .tool-name { font-size: 0.75rem; font-weight: 500; color: var(--muted); }
+
+    /* ── SUMMARY STRIP ── */
+    .summary-strip {
+      background: linear-gradient(135deg, rgba(56,189,248,0.06), rgba(167,139,250,0.04));
+      border: 1px solid rgba(56,189,248,0.15);
+      border-radius: 20px;
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+    .sum-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.5rem; font-weight: 800;
+      display: block; line-height: 1; margin-bottom: 0.4rem;
+    }
+    .sum-num.blue { color: var(--accent); }
+    .sum-num.purple { color: var(--accent2); }
+    .sum-num.green { color: var(--accent3); }
+    .sum-num.orange { color: var(--accent4); }
+    .sum-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem; text-align: center;
+      color: var(--muted); font-size: 0.8rem; position: relative; z-index: 2;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(56,189,248,0.3); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .tools-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">WK<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="skills.html" class="active">Skills</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="contact.html" class="nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <p class="page-label">Technical Arsenal</p>
+  <h1 class="page-title">Skills built through<br><span>real projects</span></h1>
+  <p class="page-sub">Every skill here has been applied to a real problem — not just studied. From SQL queries to deployed ML models and LLM pipelines.</p>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot expert"></div> Expert / Daily use</div>
+    <div class="legend-item"><div class="legend-dot proficient"></div> Proficient / Project-proven</div>
+    <div class="legend-item"><div class="legend-dot learning"></div> Growing / Active learning</div>
+  </div>
+</div>
+
+<div class="skills-wrapper">
+
+  <!-- ── SUMMARY ── -->
+  <div class="summary-strip reveal">
+    <div>
+      <span class="sum-num blue">6+</span>
+      <span class="sum-label">Domains</span>
+    </div>
+    <div>
+      <span class="sum-num purple">40+</span>
+      <span class="sum-label">Tools & Skills</span>
+    </div>
+    <div>
+      <span class="sum-num green">6+</span>
+      <span class="sum-label">Projects shipped</span>
+    </div>
+    <div>
+      <span class="sum-num orange">3</span>
+      <span class="sum-label">Cloud platforms</span>
+    </div>
+  </div>
+
+  <!-- ── 1. CORE LANGUAGES ── -->
+  <div class="reveal">
+    <div class="category-header cat-blue">
+      <div class="category-icon blue">💻</div>
+      <div class="category-meta">
+        <p class="category-name">Core Languages & Query</p>
+        <p class="category-desc">The foundation everything else is built on</p>
+      </div>
+      <span class="category-count blue">5</span>
+    </div>
+    <div class="proficiency-grid cat-blue">
+      <div class="prof-item">
+        <div class="prof-top"><span class="prof-name">Python</span><span class="prof-pct blue">92%</span></div>
+        <div class="prof-bar-bg"><div class="prof-bar blue" data-width="92"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-top"><span class="prof-name">SQL (PostgreSQL · BigQuery)</span><span class="prof-pct blue">88%</span></div>
+        <div class="prof-bar-bg"><div class="prof-bar blue" data-width="88"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-top"><span class="prof-name">Pandas & NumPy</span><span class="prof-pct blue">90%</span></div>
+        <div class="prof-bar-bg"><div class="prof-bar blue" data-width="90"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-top"><span class="prof-name">Bash / Command Line</span><span class="prof-pct blue">68%</span></div>
+        <div class="prof-bar-bg"><div class="prof-bar blue" data-width="68"></div></div>
+      </div>
+      <div class="prof-item">
+        <div class="prof-top"><span class="prof-name">Git & Version Control</span><span class="prof-pct blue">75%</span></div>
+        <div class="prof-bar-bg"><div class="prof-bar blue" data-width="75"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. MACHINE LEARNING ── -->
+  <div class="reveal">
+    <div class="category-header cat-purple">
+      <div class="category-icon purple">🧠</div>
+      <div class="category-meta">
+        <p class="category-name">Machine Learning</p>
+        <p class="category-desc">From classical models to deep learning</p>
+      </div>
+      <span class="category-count purple">12</span>
+    </div>
+    <div class="skills-pills cat-purple">
+      <span class="skill-pill"><span class="pill-dot expert"></span>Scikit-learn</span>
+      <span class="skill-pill"><span class="pill-dot expert"></span>XGBoost / LightGBM</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Random Forests</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Regression & Classification</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Clustering (K-Means, DBSCAN)</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Feature Engineering</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Model Evaluation & Tuning</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>PyTorch</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>TensorFlow / Keras</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Neural Networks (CNN, RNN)</span>
+      <span class="skill-pill"><span class="pill-dot learning"></span>Transformers / HuggingFace</span>
+      <span class="skill-pill"><span class="pill-dot learning"></span>Reinforcement Learning (basics)</span>
+    </div>
+  </div>
+
+  <!-- ── 3. AI ENGINEERING ── -->
+  <div class="reveal">
+    <div class="category-header cat-pink">
+      <div class="category-icon pink">🤖</div>
+      <div class="category-meta">
+        <p class="category-name">AI Engineering & LLMs</p>
+        <p class="category-desc">Building intelligent systems with large language models</p>
+      </div>
+      <span class="category-count pink">8</span>
+    </div>
+    <div class="skills-pills cat-pink">
+      <span class="skill-pill"><span class="pill-dot proficient"></span>LangChain</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>OpenAI API</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>RAG Pipelines</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Vector Databases (FAISS, Pinecone)</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Prompt Engineering</span>
+      <span class="skill-pill"><span class="pill-dot learning"></span>LLM Agents & Tool Use</span>
+      <span class="skill-pill"><span class="pill-dot learning"></span>Fine-tuning LLMs</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Sentiment Analysis (NLP)</span>
+    </div>
+  </div>
+
+  <!-- ── 4. DATA ENGINEERING ── -->
+  <div class="reveal">
+    <div class="category-header cat-green">
+      <div class="category-icon green">⚙️</div>
+      <div class="category-meta">
+        <p class="category-name">Data Engineering & Pipelines</p>
+        <p class="category-desc">Moving, transforming, and storing data at scale</p>
+      </div>
+      <span class="category-count green">10</span>
+    </div>
+    <div class="skills-pills cat-green">
+      <span class="skill-pill"><span class="pill-dot proficient"></span>ETL Pipeline Design</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Microsoft Azure (ADF, Blob, Synapse)</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Google BigQuery</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Google Cloud Platform</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Apache Spark (basics)</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>PostgreSQL</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Data Modelling</span>
+      <span class="skill-pill"><span class="pill-dot learning"></span>Apache Airflow</span>
+      <span class="skill-pill"><span class="pill-dot learning"></span>dbt (data build tool)</span>
+    </div>
+  </div>
+
+  <!-- ── 5. ANALYTICS & VISUALISATION ── -->
+  <div class="reveal">
+    <div class="category-header cat-orange">
+      <div class="category-icon orange">📊</div>
+      <div class="category-meta">
+        <p class="category-name">Analytics & Visualisation</p>
+        <p class="category-desc">Turning numbers into decisions</p>
+      </div>
+      <span class="category-count orange">9</span>
+    </div>
+    <div class="skills-pills cat-orange">
+      <span class="skill-pill"><span class="pill-dot expert"></span>Power BI</span>
+      <span class="skill-pill"><span class="pill-dot expert"></span>Looker Studio</span>
+      <span class="skill-pill"><span class="pill-dot expert"></span>Tableau</span>
+      <span class="skill-pill"><span class="pill-dot expert"></span>Matplotlib & Seaborn</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Plotly</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Exploratory Data Analysis (EDA)</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>A/B Testing & Statistics</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Time Series Analysis (SARIMA, Prophet)</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Statistical Hypothesis Testing</span>
+    </div>
+  </div>
+
+  <!-- ── FULL-STACK & PRODUCT DEVELOPMENT ── -->
+  <div class="reveal">
+    <div class="category-header cat-teal">
+      <div class="category-icon teal">🧩</div>
+      <div class="category-meta">
+        <p class="category-name">Full-Stack & Product Development</p>
+        <p class="category-desc">Application technologies used in recent GitHub projects</p>
+      </div>
+      <span class="category-count teal">7</span>
+    </div>
+    <div class="skills-pills cat-teal">
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Next.js</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>TypeScript</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Supabase</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Tailwind CSS</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Node.js</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>SQLite</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Vite</span>
+    </div>
+  </div>
+
+  <!-- ── 6. MLOPS & DEPLOYMENT ── -->
+  <div class="reveal">
+    <div class="category-header cat-teal">
+      <div class="category-icon teal">🚀</div>
+      <div class="category-meta">
+        <p class="category-name">MLOps & Deployment</p>
+        <p class="category-desc">Getting models out of notebooks and into production</p>
+      </div>
+      <span class="category-count teal">8</span>
+    </div>
+    <div class="skills-pills cat-teal">
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Docker & Containerisation</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>FastAPI</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>MLflow</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Model Versioning</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>REST API Design</span>
+      <span class="skill-pill"><span class="pill-dot learning"></span>CI/CD for ML (GitHub Actions)</span>
+      <span class="skill-pill"><span class="pill-dot learning"></span>Kubernetes (basics)</span>
+      <span class="skill-pill"><span class="pill-dot learning"></span>Evidently AI (monitoring)</span>
+    </div>
+  </div>
+
+  <!-- ── 7. COMPUTER VISION ── -->
+  <div class="reveal">
+    <div class="category-header cat-blue">
+      <div class="category-icon blue">👁️</div>
+      <div class="category-meta">
+        <p class="category-name">Computer Vision</p>
+        <p class="category-desc">Teaching machines to see and interpret images</p>
+      </div>
+      <span class="category-count blue">5</span>
+    </div>
+    <div class="skills-pills cat-blue">
+      <span class="skill-pill"><span class="pill-dot proficient"></span>OpenCV</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>CNN Architectures (ResNet, VGG)</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Image Classification</span>
+      <span class="skill-pill"><span class="pill-dot proficient"></span>Object Detection (YOLO basics)</span>
+      <span class="skill-pill"><span class="pill-dot learning"></span>Image Segmentation</span>
+    </div>
+  </div>
+
+  <!-- ── 8. TOOLS & ENVIRONMENT ── -->
+  <div class="reveal">
+    <div class="category-header">
+      <div class="category-icon dark" style="background:rgba(255,255,255,0.06)">🛠️</div>
+      <div class="category-meta">
+        <p class="category-name">Tools & Environment</p>
+        <p class="category-desc">The day-to-day toolkit</p>
+      </div>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-card"><div class="tool-emoji">🐍</div><div class="tool-name">Python</div></div>
+      <div class="tool-card"><div class="tool-emoji">📓</div><div class="tool-name">Jupyter</div></div>
+      <div class="tool-card"><div class="tool-emoji">🔵</div><div class="tool-name">VS Code</div></div>
+      <div class="tool-card"><div class="tool-emoji">☁️</div><div class="tool-name">Google Colab</div></div>
+      <div class="tool-card"><div class="tool-emoji">🐙</div><div class="tool-name">GitHub</div></div>
+      <div class="tool-card"><div class="tool-emoji">🐳</div><div class="tool-name">Docker</div></div>
+      <div class="tool-card"><div class="tool-emoji">📊</div><div class="tool-name">Power BI</div></div>
+      <div class="tool-card"><div class="tool-emoji">📈</div><div class="tool-name">Tableau</div></div>
+      <div class="tool-card"><div class="tool-emoji">📈</div><div class="tool-name">Looker Studio</div></div>
+      <div class="tool-card"><div class="tool-emoji">🔷</div><div class="tool-name">Azure</div></div>
+      <div class="tool-card"><div class="tool-emoji">🟡</div><div class="tool-name">BigQuery</div></div>
+      <div class="tool-card"><div class="tool-emoji">🧪</div><div class="tool-name">MLflow</div></div>
+      <div class="tool-card"><div class="tool-emoji">⚡</div><div class="tool-name">FastAPI</div></div>
+      <div class="tool-card"><div class="tool-emoji">▲</div><div class="tool-name">Next.js</div></div>
+      <div class="tool-card"><div class="tool-emoji">🗄️</div><div class="tool-name">Supabase</div></div>
+      <div class="tool-card"><div class="tool-emoji">🟢</div><div class="tool-name">Node.js</div></div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>Built by <a href="about.html">Waheed Tunde Kehinde</a> · Data Scientist & AI Engineer · Germany</p>
+</footer>
+
+<script>
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.06 });
+document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
+
+// ── ANIMATE PROGRESS BARS ON SCROLL ──
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.prof-bar').forEach(bar => {
+        const w = bar.getAttribute('data-width');
+        bar.style.width = w + '%';
+      });
+      barObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.proficiency-grid').forEach(g => barObserver.observe(g));
+</script>
+</body>
+</html>
